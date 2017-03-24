@@ -8,6 +8,8 @@ This application supports the [Getting Started with Java on Heroku](https://devc
 
 ## Running Locally
 
+Davids additional
+
 Make sure you have Java and Maven installed.  Also, install the [Heroku Toolbelt](https://toolbelt.heroku.com/).
 
 ```sh
