@@ -42,6 +42,11 @@ public class Main {
       return null;
     });
 
+    get("/tweets", (request, response) -> {
+      response.redirect("twitter.html");
+      return null;
+    });
+
       // .../api/search?q="companyName"
     get("/api/search", (req, res) -> {
       String request = req.queryParams("q");
