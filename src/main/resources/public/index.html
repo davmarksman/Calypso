@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Stylish Portfolio - Start Bootstrap Theme</title>
+
+
+    <!-- Custom Fonts -->
+    <!--<link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Arimo">-->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+   <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+   <link rel="stylesheet" type="text/css" href="/stylesheets/input.css" />
+   <link rel="stylesheet" type="text/css" href="/stylesheets/card.css" />
+   <link rel="stylesheet" type="text/css" href="/stylesheets/grid.css" />
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCU4lnICmI6hmZIKZwNfnJBg5ymb1tSbhc"></script>
+    <script src="/javascript/main.js"></script>
+    <script src="/javascript/card.js"></script>
+
+</head>
+
+<body>
+    <div class="register">
+      <div class="field">
+        <input id="register" maxlength="21" type="text"><label for="register"><span>Enter Company Name</span></label><button id="btnOk">OK</button>
+      </div>
+    </div>
+    <div>
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+
+              <div class="card">
+
+                <div class="card-image">
+                  <a href="#" type="button" class="btn cardLink">
+                    <img src="http://www.xaviersconsultancy.asia/wp-content/uploads/2015/08/company-icon-300.png" alt="user-image" height="100" width="100"/>
+                  </a>
+                </div>
+
+                <div class="card-modal">Take a look at my Profile!</div>
+
+                <div class="card-info">
+
+                  <div class="name">
+                    <p id="companyName">Nunc Lorem Interdum</p>
+                  </div>
+
+                  <div class="social-network">
+                    <a href="#" class="icon youtube">
+                      <i class="fa fa-youtube"></i>
+                    </a>
+                    <a href="#" class="icon twitter">
+                      <i class="fa fa-twitter"></i>
+                    </a>
+                    <a href="#" class="icon facebook">
+                      <i class="fa fa-facebook"></i>
+                    </a>
+                  </div>
+
+                  <hr>
+
+                  <div id="companyInfo" class="content">
+                    <p>
+                      <b>Date of creation:</b><span id="companyCreate"></span>
+                    </p>
+                    <p><b>Sector:</b><span id="companySector"></span></p>
+                    <p><b>Capital:</b><span id="companyCapital"></span></p>
+                    <p><b>Location:</b></p>
+                      <!-- Map -->
+                      <div id="map" class="map"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <div class="container">
+            <div class="card-cap">
+                <h3>Risk Status</h3>
+            </div>
+            <div id="gridBody" class="card-body">
+                <div class="build-header">
+                    <div class="col-sml header"></div>
+                    <div class="col-lg header">Category</div>
+                    <div class="col-med header">Description</div>
+                    <div class="col-med header">Improvements</div>
+                    <div class="col-med header">Risk Impact</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

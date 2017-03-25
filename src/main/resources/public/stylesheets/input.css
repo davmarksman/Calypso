@@ -21,8 +21,11 @@ body {
 body {
   background: -webkit-linear-gradient(top, #639EDB, #0668CF) no-repeat;
   background: linear-gradient(to bottom, #639EDB, #0668CF) no-repeat;
-  font-family: 'Arimo', sans-serif;
   background-size: 100%;
+    font-size: 16px;
+    font-weight: 300;
+    font-family: 'Lato';
+      color: #7f8c8d;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -36,16 +39,6 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-}
-
-p {
-  text-align: center;
-  color: #ffffff;
-  font-size: 13px;
-}
-
-a:hover, a:visited, a:hover, a:link {
-  color: rgba(255, 255, 255, 0.6);
 }
 
 .register {
