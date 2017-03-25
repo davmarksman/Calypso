@@ -1,5 +1,6 @@
 $(function(){
 
+    $("#searchResults").hide();
     var $form = $('.register');
 
 
@@ -31,16 +32,16 @@ $(function(){
     	e.preventDefault;
     	var $this = $(this);
     	$(this).addClass('full');
-    	$(this).html('Searching!');
+    	$(this).html('Analysing...');
 
         search();
 
-    	setTimeout(()=> {
-    		$form.find('input').val('').removeClass('active');
-    		$form.find('label').removeClass('active');
-    		$this.removeClass('full active');
-    		$this.html('OK');
-    	}, 1200);
+//    	setTimeout(()=> {
+//    		$form.find('input').val('').removeClass('active');
+//    		$form.find('label').removeClass('active');
+//    		$this.removeClass('full active');
+//    		$this.html('OK');
+//    	}, 1200);
     })
 
 
@@ -83,8 +84,12 @@ $(function(){
             company.charges = data.companyInfo.has_charges;
             company.dispute = data.companyInfo.registered_office_is_in_dispute;
             company.address = data.companyInfo.registered_office_address.postal_code;
-            company.sicCode = data.companyInfo.sic_codes[0];
-            company.sector = getSector(data.companyInfo.sic_codes[0]);
+            var sicCode = "0";
+            if(data.companyInfo.sic_codes && data.companyInfo.sic_codes[0]){
+                sicCode = data.companyInfo.sic_codes[0];
+            }
+            company.sicCode = sicCode;
+            company.sector = getSector(sicCode);
             company.officers = {
                 active: data.officers.active_count,
                 resigned: data.officers.resigned_count,
@@ -107,20 +112,29 @@ $(function(){
 
     function getCapital(filingHistory){
         for(var i = 0; i< filingHistory.length; i++){
-            if(filingHistory[i].description_values.capital){
+            if(filingHistory[i].description_values && filingHistory[i].description_values.capital && filingHistory[i].description_values.capital[0]){
                 return {
                     ccy : filingHistory[i].description_values.capital[0].currency,
                     figureStr : filingHistory[i].description_values.capital[0].figure,
-                    figureInt : parseInt(filingHistory[i].description_values.capital[0].figure.replace(",","")),
+                    figureInt : parseInt(filingHistory[i].description_values.capital[0].figure.replace(new RegExp(",", 'g'), "")),
                 };
             }
         }
+
+        return {
+               ccy : "GBP",
+               figureStr : "Unknown",
+               figureInt : parseInt(0),
+           };
     }
 
     function calculateRiskInfo(company){
         var premium = company.capital.figureInt / 100;
         var riskText = [];
 
+        if(premium == 0){
+            riskText.push({ cat: "General", text: "Company financial information unavailable", colour: "red", health: "terrible", improvement: "", impact: 100 } );
+        }
         if(company.status != "active"){
             premium = premium * 0;
             riskText.push({ cat: "General", text: "Company is inactive", colour: "red", health: "terrible", improvement: "", impact: 100 } );
@@ -170,7 +184,7 @@ $(function(){
             colour = "green";
             health = "great";
         }
-        riskText.push({ cat: "Company activity", text: text, colour: colour, impact: 20 }  );
+        riskText.push({ cat: "Company activity", text: text, health: health, colour: colour, impact: 20 }  );
 
         var sicRisk = getSicRisk(company.sicCode);
         modifier = modifier * (1 + sicRisk.riskRating)
@@ -200,11 +214,16 @@ $(function(){
     }
 
     function displayCompanyInfo(company){
+        $("#searchResults").show(1000);
+        $("#searchForm").hide(1000);
+
         var $companyInfo =  $("#companyInfo");
         $("#companyName").text( company.name );
         $("#companyCreate").text( company.creationDate );
         $("#companySector").text( company.sector );
-        $("#companyCapital").text( company.capital.ccy +  company.capital.figureStr );
+        $("#companyCapital").text( "£" +  company.capital.figureStr );
+        $("#premiumnText").html("<small>£</small>" + company.risk.premium)
+        $("#premiumnTypeText").html("(DNO) Directors and officers")
         setMap(company.address)
 
         for(var i = 0; i<company.risk.riskText.length; i++){
@@ -222,15 +241,18 @@ $(function(){
         statusColumn.append($("<span></span>").addClass("build-status").attr("data-build-status", rowData.colour));
         element.append(statusColumn);
 
-        var catCol = $("<div></div>").addClass("col-lg name").html(rowData.cat);
+        var catCol = $("<div></div>").addClass("col-med name").html(rowData.cat);
         element.append(catCol);
 
-        var healthCol = $("<div></div>").addClass("col-med health");
-        healthCol.append($("<span></span>").attr("data-tooltip", rowData.text).attr("data-tooltip-options", "light"));
+        var healthCol = $("<div></div>").addClass("col-smlMid health");
         healthCol.append($("<span></span>").addClass("build-health").attr("data-build-health", rowData.health));
         element.append(healthCol);
 
-        var improvCol = $("<div></div>").addClass("col-lg duration").html(rowData.improvement);
+        var descCol = $("<div></div>").addClass("col-med duration padText").html(rowData.text);
+        element.append(descCol);
+
+        var improveText = rowData.improvement == "" ? "None" : rowData.improvement;
+        var improvCol = $("<div></div>").addClass("col-med duration padText").html(improveText);
         element.append(improvCol);
 
         var impactCol = $("<div></div>").addClass("col-med current-build");
@@ -257,11 +279,11 @@ $(function(){
     }
 
     function getSector(sicCode){
-        return "industrial"
+        if(sicCode == "0"){
+            return "Unknown";
+        }
+        return "Industrial"
     }
-
-    searchCompaniesHouse("9095835");
-    //searchCompaniesHouse("london");
 
     // Map
 
@@ -288,7 +310,7 @@ $(function(){
 
     	// add our default mapOptions
     	var mapOptions = {
-    	  zoom: 16,              // zoom level of the map
+    	  zoom: 6,              // zoom level of the map
     	  center: _position     // position to center
     	}
 

@@ -335,7 +335,7 @@
 
 .container {
   margin: 10px auto;
-  width: 700px;
+  width: 850px;
 }
 
 .card-cap {
@@ -486,6 +486,12 @@
   width: 5%;
 }
 
+.col-smlMid {
+  float: left;
+  min-height: 1px;
+  width: 10%;
+}
+
 .col-med {
   float: left;
   min-height: 1px;
@@ -496,4 +502,9 @@
   float: left;
   min-height: 1px;
   width: 35%;
+}
+
+.padText {
+    padding-left:3px;
+    padding-right:3px;
 }

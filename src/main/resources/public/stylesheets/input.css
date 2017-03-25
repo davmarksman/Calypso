@@ -19,8 +19,7 @@ body {
 }
 
 body {
-  background: -webkit-linear-gradient(top, #639EDB, #0668CF) no-repeat;
-  background: linear-gradient(to bottom, #639EDB, #0668CF) no-repeat;
+  background: #bdc3c7 url("/9067576mar.jpg") 0 0 no-repeat;
   background-size: 100%;
     font-size: 16px;
     font-weight: 300;
@@ -58,16 +57,20 @@ body {
   width: 600px;
   height: 70px;
   position: relative;
+  border-style: dashed;
+  border-width: 2px;
 }
 .field input {
   width: 100%;
+  border-style: dashed;
   border-radius: 6px;
+  border-color: #ffffff;
   height: 70px;
   border: 0;
   padding: 10px;
   padding: 20px 0 0 16px;
   font-size: 0;
-  background: #1566BB;
+    background: rgba(54, 25, 25, 0);
   -webkit-transition: background .3s ease;
   transition: background .3s ease;
   color: #ffffff;
@@ -102,7 +105,7 @@ body {
   -webkit-transition: width .3s ease, background .3s ease, opacity .3s ease;
   transition: width .3s ease, background .3s ease, opacity .3s ease;
   opacity: 0;
-  color: #065CB7;
+  color: #ffffff;
   text-transform: uppercae;
   pointer-events: none;
 }
@@ -142,5 +145,5 @@ body {
   color: rgba(255, 255, 255, 0.7);
 }
 .field input:focus + label + button {
-  opacity: 1;
+  opacity: 0.7;
 }
