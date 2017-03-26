@@ -26,6 +26,8 @@ public class Main {
     String port = System.getenv("PORT");
     if (port == null)
       port = "4567";
+
+    port(Integer.valueOf(port));
     staticFileLocation("/public");
 
     get("/hello", (req, res) -> "Hello World");
