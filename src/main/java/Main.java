@@ -42,10 +42,16 @@ public class Main {
       return null;
     });
 
-    get("/tweets/*", (request, response) -> {
-      response.redirect("twitter.html");
-      return null;
-    });
+//    get("/tweets/*", (request, response) -> {
+//      response.redirect("twitter.html");
+//      return null;
+//    });
+
+    get("/tweets", (request, response) -> {
+      Map<String, Object> attributes = new HashMap<>();
+
+      return new ModelAndView(attributes, "twitter.ftl");
+    }, new FreeMarkerEngine());
 
       // .../api/search?q="companyName"
     get("/api/search", (req, res) -> {
@@ -65,7 +71,7 @@ public class Main {
     get("/api/company", (req, res) -> {
       String companyNo = req.queryParams("companyNo");
 
-      String filingHistoryUrl = "https://api.companieshouse.gov.uk/company/" + companyNo + "/filing-history";
+      String filingHistoryUrl = "https://api.companieshouse.gov.uk/company/" + companyNo + "/filing-history?items_per_page=400";
       String companyInfoUrl = "https://api.companieshouse.gov.uk/company/" + companyNo;
       String officersUrl = "https://api.companieshouse.gov.uk/company/" + companyNo + "/officers";
 

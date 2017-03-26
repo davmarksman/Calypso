@@ -9,11 +9,11 @@ $(function(){
         name = "calypso";
     }
 
-    getTwits(bearer_token, name);
+    getTwits(bearer_token, name.match('^[a-zA-Z0-9]+')[0]);
 
     function getValueAtEnd(str){
         var split = str.split("=")
-        return split[split.length-1];
+        return decodeURI(split[split.length-1]);
     }
 
 
@@ -39,7 +39,7 @@ $(function(){
         cb.setBearerToken(bearerToken);
         cb.__call(
             "search_tweets",
-            "q=" + searchStr,
+            "q=" + encodeURIComponent(searchStr),
             function (reply) {
                 displayResults(searchStr, reply);
             },

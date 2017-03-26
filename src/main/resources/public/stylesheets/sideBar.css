@@ -20,7 +20,7 @@
 
 .panel {
   position: absolute;
-  width: 80%;
+  width: 90%;
   height: 80%;
   -webkit-transform: scale(0.95);
           transform: scale(0.95);
@@ -76,7 +76,7 @@
 }
 
 .panel-content__heading {
-  font-size: 70px;
+  font-size: 60px;
   line-height: 65px;
   font-weight: 300;
   margin: 0;

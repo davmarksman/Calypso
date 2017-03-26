@@ -108,12 +108,12 @@ $(function(){
             company.risk = calculateRiskInfo(company);
             displayCompanyInfo(company);
 
-
-            @("#twitterLink").attr('href', "/tweets/q=" + company.name);
+            $("#twitterLink").attr('href', "/tweets?q=" + encodeURIComponent(company.name));
         });
     }
 
     function getCapital(filingHistory){
+        var total = 0;
         for(var i = 0; i< filingHistory.length; i++){
             if(filingHistory[i].description_values && filingHistory[i].description_values.capital && filingHistory[i].description_values.capital[0]){
                 return {
@@ -121,18 +121,19 @@ $(function(){
                     figureStr : filingHistory[i].description_values.capital[0].figure,
                     figureInt : parseInt(filingHistory[i].description_values.capital[0].figure.replace(new RegExp(",", 'g'), "")),
                 };
+                 //total = total + parseInt(filingHistory[i].description_values.capital[0].figure.replace(new RegExp(",", 'g'), ""));
             }
         }
 
         return {
                ccy : "GBP",
-               figureStr : "Unknown",
-               figureInt : parseInt(0),
+               figureStr : "0",
+               figureInt : 0,
            };
     }
 
     function calculateRiskInfo(company){
-        var premium = company.capital.figureInt / 100;
+        var premium = company.capital.figureInt / 10;
         var riskText = [];
 
         if(premium == 0){
@@ -176,6 +177,16 @@ $(function(){
         }
         riskText.push({ cat: "Company Age", text: text, colour: colour, health: health, improvement: "", impact: 10 } );
 
+        var socialRisk = Math.random()/2;
+        modifier = modifier * (1 + socialRisk);
+        var colour = "green";
+        var health = "good"
+        if(socialRisk > 0.2){
+            colour = "yellow";
+            health = "bad"
+        }
+        riskText.push({ cat: "Social Media", text: "Risk Indicators", colour: colour, health: health, improvement: "", impact: 60 } );
+
         //terrible, bad, good, great
         var filingsRisk = company.noOfFilings/(50 * companyAge);
         modifier = modifier * (1 + filingsRisk);
@@ -187,7 +198,7 @@ $(function(){
             colour = "green";
             health = "great";
         }
-        riskText.push({ cat: "Company activity", text: text, health: health, colour: colour, impact: 20 }  );
+        riskText.push({ cat: "Company Activity", text: text, health: health, colour: colour, impact: 20 }  );
 
         var sicRisk = getSicRisk(company.sicCode);
         modifier = modifier * (1 + sicRisk.riskRating)
@@ -208,7 +219,8 @@ $(function(){
 
        modifier = modifier * (1 + staffTurnOverRisk)
        riskText.push({ cat: "Senior Staff turnover", text: "" + company.officers.resigned + " resigned officers", colour: colour, health: health, improvement: "Less senior staff turnover", impact: 50 } );
-        riskText.push({ cat: "Other", text: "Other", colour: "green", health: "good", improvement: "", impact: 0 } );
+       // riskText.push({ cat: "Other", text: "Other", colour: "green", health: "good", improvement: "", impact: 0 } );
+
 
        return {
                 premium : Math.floor(premium * modifier),
@@ -270,19 +282,46 @@ $(function(){
     }
 
     function getSicRisk(sicCode){
-        var riskRating = Math.random();
-        var riskType = "Industry Sector Risk"
-        var riskStr = riskRating > 0.5 ? "High" : "Low";
+        if(sicCode = "64999"){
+                return {
+                        riskRating : -0.6,
+                        riskStr : "Medium",
+                    };
+        }
+        if(sicCode = "62011"){
+                return {
+                        riskRating : -0.8,
+                        riskStr : "Low",
+                    };
+        }
+        if(sicCode = "82990"){
+                return {
+                        riskRating : -0.8,
+                        riskStr : "Low",
+                    };
+        }
+
         return {
-                riskRating :  riskRating,
-                riskType: riskType,
-                riskStr : riskStr,
+                riskRating : 1,
+                riskStr : "High",
             };
     }
 
     function getSector(sicCode){
         if(sicCode == "0"){
             return "Unknown";
+        }
+
+        if(sicCode == "64999"){
+            return "Ready-Made Interactive Leisure And Entertainment Software Development";
+        }
+
+        if(sicCode == "62011"){
+            return "Ready-Made Interactive Leisure And Entertainment Software Development";
+        }
+
+        if(sicCode == "82990"){
+            return "Other business support service activities n.e.c.";
         }
         return "Industrial"
     }
