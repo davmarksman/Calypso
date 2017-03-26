@@ -236,8 +236,8 @@ $(function(){
         $("#companyName").text( company.name );
         $("#companyCreate").text( company.creationDate );
         $("#companySector").text( company.sector );
-        $("#companyCapital").text( "£" +  company.capital.figureStr );
-        $("#premiumnText").html("<small>£</small>" + company.risk.premium)
+        $("#companyCapital").text( "GBP" +  company.capital.figureStr );
+        $("#premiumnText").html("<small>GBP</small>" + company.risk.premium)
         $("#premiumnTypeText").html("(DNO) Directors and officers")
         setMap(company.address)
 
