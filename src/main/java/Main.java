@@ -25,7 +25,7 @@ public class Main {
   public static void main(String[] args) {
     String port = System.getenv("PORT");
     if (port == null)
-      port = "9002";
+      port = "4567";
     staticFileLocation("/public");
 
     get("/hello", (req, res) -> "Hello World");
@@ -42,7 +42,7 @@ public class Main {
       return null;
     });
 
-    get("/tweets", (request, response) -> {
+    get("/tweets/*", (request, response) -> {
       response.redirect("twitter.html");
       return null;
     });

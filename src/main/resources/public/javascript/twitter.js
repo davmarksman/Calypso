@@ -1,10 +1,21 @@
 $(function(){
 
-/*
-
-*/
     var bearer_token = "AAAAAAAAAAAAAAAAAAAAACY%2BzwAAAAAA9BbrjkbsipCvTtkcWoo3xkKAHCo%3DchZklsixPCk1wxJKq4kuFKpUxhfD39jRsWdxpzc7368KTpc94j";
     var cb = new Codebird;
+
+    var url = window.location.href;
+    var name = getValueAtEnd(window.location.href);
+    if(!name){
+        name = "calypso";
+    }
+
+    getTwits(bearer_token, name);
+
+    function getValueAtEnd(str){
+        var split = str.split("=")
+        return split[split.length-1];
+    }
+
 
     function setNewBearToken(){
         cb.setConsumerKey("lV07eLAurD4io5GcyuGYMqUyR", "eY6kz4GQ8xag1Jga7bbsE34janq7M2HMuRCLsdzRfXSEQXQl2u");
@@ -23,7 +34,6 @@ $(function(){
         );
     }
 
-    getTwits(bearer_token, "twitter");
 
     function getTwits(bearerToken, searchStr){
         cb.setBearerToken(bearerToken);

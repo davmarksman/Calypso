@@ -107,6 +107,9 @@ $(function(){
 
             company.risk = calculateRiskInfo(company);
             displayCompanyInfo(company);
+
+
+            @("#twitterLink").attr('href', "/tweets/q=" + company.name);
         });
     }
 
@@ -264,7 +267,6 @@ $(function(){
             impactCol.append($("<div></div>").addClass("status-bar").append($("<span></span>").addClass("status-value").attr("style", "width: " + rowData.impact  + "%;")));
         }
         element.append(impactCol);
-
     }
 
     function getSicRisk(sicCode){
