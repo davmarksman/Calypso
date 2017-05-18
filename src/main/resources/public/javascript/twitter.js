@@ -18,7 +18,7 @@ $(function(){
 
 
     function setNewBearToken(){
-        cb.setConsumerKey("lV07eLAurD4io5GcyuGYMqUyR", "eY6kz4GQ8xag1Jga7bbsE34janq7M2HMuRCLsdzRfXSEQXQl2u");
+        cb.setConsumerKey("hid", "hid");
 
         cb.__call(
             "oauth2_token",
