@@ -1,6 +1,6 @@
 $(function(){
 
-    var bearer_token = "AAAAAAAAAAAAAAAAAAAAACY%2BzwAAAAAA9BbrjkbsipCvTtkcWoo3xkKAHCo%3DchZklsixPCk1wxJKq4kuFKpUxhfD39jRsWdxpzc7368KTpc94j";
+    var bearer_token = "hidden";
     var cb = new Codebird;
 
     var url = window.location.href;
